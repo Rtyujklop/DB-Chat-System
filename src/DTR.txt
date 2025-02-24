@@ -1,0 +1,87 @@
+Tables:
+
+    Users:
+
+        Fields:
+        
+            id (Primary Key)
+            username
+            contact_info
+            created_at
+            last_username_change
+
+    Messages:
+
+        Fields:
+
+            id (Primary Key)
+            sender_id
+            receiver_id
+            message
+            timestamp
+            is_unread
+            community_id
+            channel_id
+    
+    Suspensions:
+
+        Fields:
+
+            user_id (Foreign Key referencing Users(id))
+            suspended_until
+            Primary Key(user_id)
+
+    Communities:
+
+        Fields:
+
+            id (Primary Key)
+            name
+
+    Channels:
+
+        Fields:
+
+        id (Primary Key)
+        name (Foreign Key referencing Riders(rider_id))
+        community_id (Foreign Key referencing Communities(id))
+
+    Memberships:
+
+        Fields:
+
+        user_id (Foreign Key referencing Users(id))
+        community_id (Foreign Key referencing Communities(id))
+        channel_id (Foreign Key referencing Channels(id))
+        suspended
+        Primary Key(user_id, community_id)
+    
+Relationships:
+
+    Users(id) <-> Messages(sender_id)
+
+    One user can have multiple messages.
+
+    Users(id) <-> Messages(receiver_id)
+
+    One user can recieve multiple messages.
+
+    Users(id) <-> Suspensions(user_id)
+
+    User get suspended once.
+
+    Communities(id) <-> Channels(community_id)
+
+    One community can have multiple channels.
+
+    Communities(id) <-> Memberships(community_id)
+
+    One community can have multiple members.
+
+    Channels(id) <-> Memberships(channel_id)
+
+    One channel can have multiple members.
+
+    Channels(id) <-> Messages(channel_id)
+
+    One channel can have multiple messages.
